@@ -107,3 +107,33 @@ body {
   background: #e03e00;
 }
 
+
+
+
+
+
+
+.sidebar h2 {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #ecf0f1;
+  padding-bottom: 10px;
+}
+
+
+.manufacturer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+.manufacturer-item {
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
