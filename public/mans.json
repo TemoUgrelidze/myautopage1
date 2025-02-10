@@ -1,0 +1,23 @@
+[
+  {
+    "man_id": "1",
+    "man_name": "LAND ROVER",
+    "is_car": "1",
+    "is_moto": "0",
+    "is_spec": "0"
+  },
+  {
+    "man_id": "2",
+    "man_name": "TOYOTA",
+    "is_car": "1",
+    "is_moto": "0",
+    "is_spec": "0"
+  },
+  {
+    "man_id": "3",
+    "man_name": "BMW",
+    "is_car": "1",
+    "is_moto": "1",
+    "is_spec": "0"
+  }
+]

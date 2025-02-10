@@ -1,29 +1,44 @@
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f8f8f8;
+  font-family: 'Arial', sans-serif;
+  background: #f4f4f9;
+  color: #333;
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-start; /* მარცხნივ გასწორება */
   align-items: flex-start;
   height: 100vh;
 }
 
-/* კონტეინერი, რომელიც მთლიან აპლიკაციას მოიცავს */
+/*  მთავარი კონტეინერი */
 .app-container {
   display: flex;
+  flex-direction: column; /* მარცხნივ გასწორება */
   width: 100%;
+  max-width: 1200px;
   padding: 20px;
+  gap: 20px;
 }
 
+
+.sidebar {
+  display: none; /* sidebar-ს ვმალავთ, რომ თეთრი სივრცე აღარ იყოს */
+}
+
+
 .search-container {
-  width: 280px;
+  width: 300px;
   background: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  left: 20px; /* მარცხენა კუთხეში გადმოწევა */
+  top: 20px; /* ზედა სივრცის გასწორება */
 }
 
+/*  ძიების ტაბები */
 .search-tabs {
   display: flex;
   justify-content: space-between;
@@ -32,66 +47,72 @@ body {
 
 .tab {
   flex: 1;
-  padding: 10px;
+  padding: 12px;
   border: none;
   background: #eee;
   border-radius: 5px;
   cursor: pointer;
   font-size: 18px;
+  transition: 0.3s;
 }
 
 .tab.active {
   background: #ff4500;
   color: white;
+  font-weight: bold;
 }
 
-.search-content {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+.tab:hover {
+  background: #e03e00;
+  color: white;
 }
 
+/*  ძიების სექცია */
 .search-section {
   display: flex;
   flex-direction: column;
+  margin-bottom: 15px;
 }
 
 .search-section label {
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 5px;
+  color: #444;
 }
 
-.search-section select {
-  padding: 8px;
+.search-section select,
+.search-section input {
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 14px;
+  transition: 0.3s;
 }
 
+.search-section select:hover,
+.search-section input:hover {
+  border-color: #ff4500;
+}
+
+/*  ფასის ფანჯარა */
 .price-container {
   display: flex;
   align-items: center;
-  gap: 1px;
+  gap: 5px;
 }
 
 .price-container input {
   width: 45%;
-  padding: 8px;
+  padding: 10px;
   text-align: center;
   border: 1px solid #ddd;
   border-radius: 5px;
 }
 
-.currency-btn {
-  background: transparent;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-}
-
+/*  ძიების ღილაკი */
 .search-button {
-  width: 80%;
+  width: 100%;
   padding: 12px;
   background: #ff4500;
   color: white;
@@ -101,37 +122,18 @@ body {
   font-weight: bold;
   cursor: pointer;
   margin-top: 10px;
+  transition: 0.3s;
 }
 
 .search-button:hover {
   background: #e03e00;
 }
 
-
-
-
-
-
-
-.sidebar h2 {
-  font-size: 20px;
-  text-align: center;
-  margin-bottom: 15px;
-  border-bottom: 2px solid #ecf0f1;
-  padding-bottom: 10px;
+/*  მობილურისა და ტაბლეტისთვის */
+@media (max-width: 768px) {
+  .search-container {
+    width: 90%;
+    left: 10px;
+    right: 10px;
+  }
 }
-
-
-
-
-.manufacturer-item {
-  padding: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  margin-bottom: 8px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-
-
