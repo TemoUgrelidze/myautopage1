@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
-import "./App.css";
 import axios from "axios";
 
 const SearchBar = () => {
     const [manufacturers, setManufacturers] = useState([]);
-    const [activeTab, setActiveTab] = useState("car"); // Default - Car
-    const [, setFilteredManufacturers] = useState([]);
+    const [filteredManufacturers, setFilteredManufacturers] = useState([]);
+    const [activeTab, setActiveTab] = useState("car"); // Default: car
 
+    // API-დან მონაცემების წამოღება
     useEffect(() => {
-        axios
-            .get("https://static.my.ge/myauto/js/mans.json")
+        axios.get("https://static.my.ge/myauto/js/mans.json")
             .then((response) => {
+                console.log("📢 API Response:", response.data);
                 setManufacturers(response.data);
             })
             .catch((error) => {
-                console.error("Error fetching manufacturers:", error);
+                console.error("❌ Error fetching manufacturers:", error);
             });
     }, []);
 
@@ -25,12 +25,25 @@ const SearchBar = () => {
 
     // მწარმოებლების ფილტრაცია აქტიური კატეგორიის მიხედვით
     useEffect(() => {
+        console.log("🔄 Active Tab Changed:", activeTab);
+
         const filtered = manufacturers.filter((manufacturer) => {
-            if (activeTab === "car") return manufacturer.manufacturer === "car";
-            if (activeTab === "tractor") return manufacturer.manufacturer === "tractor";
-            if (activeTab === "motorcycle") return manufacturer.manufacturer === "motorcycle";
-            return true;
+            if (!manufacturer || typeof manufacturer !== "object") return false;
+
+            const isCar = manufacturer.is_car === "1";
+            const isMoto = manufacturer.is_moto === "1";
+            const isSpec = manufacturer.is_spec === "1";
+
+            console.log(`🛠 Checking: ${manufacturer.man_name} | Car: ${isCar}, Moto: ${isMoto}, Tractor: ${isSpec}`);
+
+            if (activeTab === "car") return isCar;
+            if (activeTab === "motorcycle") return isMoto;
+            if (activeTab === "tractor") return isSpec;
+
+            return false;
         });
+
+        console.log("✅ Filtered Manufacturers:", filtered);
         setFilteredManufacturers(filtered);
     }, [activeTab, manufacturers]);
 
@@ -58,54 +71,17 @@ const SearchBar = () => {
                 </button>
             </div>
 
-            {/* ყველა ელემენტი ერთ div-ში (ლამაზად) */}
-            <div className="search-content">
-                {/* გარიგების ტიპი */}
-                <div className="search-section">
-                    <label>გარიგების ტიპი</label>
-                    <select>
-                        <option value="sale">იყიდება</option>
-                        <option value="rent">ქირავდება</option>
-                    </select>
-                </div>
-
-                {/* მწარმოებელი */}
-                <div className="search-section">
-                    <label>მწარმოებელი</label>
-                    <select>
-                        <option value="">ყველა მწარმოებელი</option>
-                        {manufacturers.map((manufacturer) => (
-                            <option key={manufacturer.man_id} value={manufacturer.man_id}>
-                                {manufacturer.man_name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-                {/* კატეგორია */}
-                <div className="search-section">
-                    <label>კატეგორია</label>
-                    <select>
-                        <option value="all">ყველა კატეგორია</option>
-                        <option value="sedan">სედანი</option>
-                        <option value="suv">ჯიპი</option>
-                        <option value="coupe">კუპე</option>
-                    </select>
-                </div>
-
-                {/* ფასი */}
-                <div className="search-section">
-                    <label>ფასი</label>
-                    <div className="price-container">
-                        <input type="text" placeholder="დან" />
-                        <span>-</span>
-                        <input type="text" placeholder="მდე" />
-                        <button className="currency-btn">₾</button>
-                    </div>
-                </div>
-
-                {/* ძებნის ღილაკი */}
-                <button className="search-button">ძებნა</button>
+            {/* მწარმოებელი */}
+            <div className="search-section">
+                <label>მწარმოებელი</label>
+                <select>
+                    <option value="">ყველა მწარმოებელი</option>
+                    {filteredManufacturers.map((manufacturer) => (
+                        <option key={manufacturer.man_id} value={manufacturer.man_id}>
+                            {manufacturer.man_name}
+                        </option>
+                    ))}
+                </select>
             </div>
         </div>
     );
